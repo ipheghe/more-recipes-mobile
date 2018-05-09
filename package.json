@@ -27,7 +27,8 @@
     "test": "node node_modules/jest/bin/jest.js --coverage",
     "test-watch": "node node_modules/jest/bin/jest.js --watchAll",
     "build-test": "yarn build && yarn test",
-    "clean-build-test": "yarn run clean && yarn build && yarn test"
+    "clean-build-test": "yarn run clean && yarn build && yarn test",
+    "coveralls": "nyc yarn test && cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "jest": {
     "preset": "jest-expo-ts",
@@ -37,6 +38,24 @@
       "<rootDir>/build/"
     ]
   },
+  "nyc": {
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "include": [
+      "src/**"
+    ],
+    "exclude": [
+      "**/*.test.tsx",
+      "**/*.test.ts",
+      "**/*.d.ts"
+    ],
+    "e": [
+      ".ts",
+      ".tsx"
+    ]
+  },
   "dependencies": {
     "@types/dotenv": "^4.0.3",
     "@types/jest": "^22.2.3",
@@ -44,7 +63,9 @@
     "@types/react": "^16.3.13",
     "@types/react-native": "^0.55.12",
     "@types/react-test-renderer": "^16.0.1",
+    "coveralls": "^3.0.1",
     "expo": "^27.0.1",
+    "nyc": "^11.7.2",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "typescript": "^2.8.3"
